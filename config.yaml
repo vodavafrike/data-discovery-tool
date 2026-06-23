@@ -1,0 +1,25 @@
+# Data Discovery Tool Configuration
+app:
+  name: Data Discovery Tool
+  version: 1.0.0
+  debug: true
+
+sources:
+  sqlite:
+    name: Sample SQLite Database
+    description: SQLite database with sample data
+    db_path: ./data/sample.db
+  
+  csv:
+    name: Sample CSV Data
+    description: CSV files with sample data
+    data_dir: ./data/sample_data
+
+search:
+  max_results: 50
+  fuzzy_matching: true
+  index_dir: ./.search_index
+
+server:
+  host: 0.0.0.0
+  port: 8000
