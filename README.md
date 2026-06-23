@@ -38,3 +38,14 @@
 
 ### Архитектура
 ![Архитектура Data Discovery Tool](screenshots/architecture.png)
+
+## Веб-интерфейс
+
+### Главная страница
+![Главная страница](screenshots/web_1_main.png)
+
+### Результаты поиска
+![Результаты поиска](screenshots/web_2_search.png)
+
+### Схема таблицы
+![Схема таблицы](screenshots/web_3_schema.png)
