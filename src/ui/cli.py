@@ -26,7 +26,7 @@ class CLI:
     
     async def run(self):
         """Запуск основного цикла CLI."""
-        self.console.print(Panel.fit("🔍 Data Discovery Tool", style="bold blue"))
+        self.console.print(Panel.fit("Data Discovery Tool", style="bold blue"))
         self.console.print("Введите 'help' для списка команд, 'quit' для выхода\n")
         
         while True:
