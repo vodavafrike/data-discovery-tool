@@ -54,6 +54,40 @@ class SearchEngine:
         sorted_results = sorted(base_results, key=lambda x: x['score'], reverse=True)
         
         return sorted_results[:max_results]
+    def get_suggestions(self, query: str, limit: int = 5) -> List[str]:
+  
+        if not query or len(query) < 2:
+            return []
+    
+        query_lower = query.lower()
+        suggestions = set()
+    
+    # Ищем по всем индексированным терминам
+        for term in self.store.inverted_index.keys():
+            if term.startswith(query_lower):
+                suggestions.add(term)
+            elif query_lower in term and len(term) - len(query_lower) <= 3:
+                suggestions.add(term)
+    
+    # Ищем по названиям таблиц
+        for source in self.store.sources.values():
+            for table in source.tables:
+                table_name_lower = table.name.lower()
+                if table_name_lower.startswith(query_lower):
+                    suggestions.add(table_name_lower)
+                elif query_lower in table_name_lower:
+                    suggestions.add(table_name_lower)
+            
+            # Добавляем названия колонок
+            for column in table.columns:
+                col_name_lower = column.name.lower()
+                if col_name_lower.startswith(query_lower):
+                    suggestions.add(col_name_lower)
+                elif query_lower in col_name_lower:
+                    suggestions.add(col_name_lower)
+    
+    # Сортируем по длине
+        return sorted(suggestions, key=len)[:limit]
     
     def _fuzzy_search(self, query: str, source_id: Optional[str] = None, 
                      max_results: int = 50) -> List[Dict[str, Any]]:

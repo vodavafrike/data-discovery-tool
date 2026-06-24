@@ -1,6 +1,7 @@
 """
 Веб-интерфейс для Data Discovery Tool на Streamlit.
 """
+from typing import List
 import sys
 import json
 from pathlib import Path
@@ -9,7 +10,7 @@ from datetime import datetime
 sys.path.insert(0, str(Path(__file__).parent))
 
 import streamlit as st
-import pandas as pd
+#import pandas as pd
 
 from src.index.indexer import MetadataStore
 from src.search.engine import SearchEngine
@@ -83,6 +84,12 @@ if not store.sources:
     load_sample_data_if_empty(store)
     st.rerun()
 
+def get_suggestions(query: str) -> List[str]:
+    """Получить подсказки для поискового запроса"""
+    if not query or len(query) < 2:
+        return []
+    return search_engine.get_suggestions(query)
+
 # ============================================================
 # БОКОВАЯ ПАНЕЛЬ
 # ============================================================
@@ -123,6 +130,11 @@ with col1:
         placeholder="Введите ключевое слово (например: customer, product, email...)",
         label_visibility="collapsed"
     )
+        # Показываем подсказки
+    if query and len(query) >= 2:
+        suggestions = get_suggestions(query)
+        if suggestions:
+            st.caption("💡 Подсказки: " + ", ".join(suggestions[:5]))
 
 with col2:
     search_clicked = st.button("🔍 Найти", use_container_width=True, type="primary")
@@ -219,8 +231,7 @@ with tab2:
                         "Примеры": ', '.join(str(v) for v in (col.sample_values or [])[:3])
                     })
                 
-                df = pd.DataFrame(cols_data)
-                st.dataframe(df, use_container_width=True)
+                st.table(cols_data)
             else:
                 st.warning("Схема не найдена")
     else:

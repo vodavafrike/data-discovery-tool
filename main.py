@@ -133,7 +133,8 @@ async def main():
         from src.mcp.server import MCPServer
         server = MCPServer(store)
         print(f"🚀 Запуск MCP сервера на http://{args.host}:{args.port}")
-        server.run(host=args.host, port=args.port)
+        import uvicorn
+        uvicorn.run(server.app, host=args.host, port=args.port)
 
 
 if __name__ == "__main__":

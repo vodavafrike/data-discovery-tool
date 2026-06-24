@@ -1,6 +1,7 @@
 """
 Командная строка для Data Discovery Tool.
 """
+from typing import List
 from rich.console import Console
 from rich.table import Table
 from rich.panel import Panel
@@ -17,6 +18,11 @@ class CLI:
         self.store = metadata_store
         self.search_engine = SearchEngine(metadata_store)
         self.console = Console()
+
+    def _get_suggestions(self, query: str) -> List[str]:
+        if not query or len(query) < 2:
+            return []
+        return self.search_engine.get_suggestions(query)
     
     async def run(self):
         """Запуск основного цикла CLI."""
@@ -92,20 +98,25 @@ class CLI:
         self.console.print(table)
     
     async def _search(self, query: str):
-        """Поиск по запросу."""
+        """Поиск по запросу с подсказками."""
+        # Показываем подсказки
+        suggestions = self._get_suggestions(query)
+        if suggestions:
+            self.console.print("[dim]💡 Подсказки:[/dim] " + ", ".join(suggestions[:5]))
+    
         results = self.search_engine.search(query)
-        
+    
         if not results:
-            self.console.print(f"Результатов по запросу '{query}' не найдено", style="yellow")
+            self.console.print(f"❌ Результатов по запросу '{query}' не найдено", style="yellow")
             return
-        
-        table = Table(title=f"Результаты поиска: '{query}'")
+    
+        table = Table(title=f"📊 Результаты поиска: '{query}'")
         table.add_column("Источник", style="cyan")
         table.add_column("Таблица")
-        table.add_column("Релевантность")
+        table.add_column("Релевантность", justify="right")
         table.add_column("Колонки")
-        table.add_column("Строк")
-        
+        table.add_column("Строк", justify="right")
+    
         for result in results[:20]:
             table.add_row(
                 result.get('source_name', result['source_id']),
@@ -114,9 +125,9 @@ class CLI:
                 ', '.join(result.get('table_columns', [])[:5]),
                 str(result.get('row_count', 'N/A'))
             )
-        
+    
         self.console.print(table)
-        self.console.print(f"Найдено {len(results)} результатов", style="green")
+        self.console.print(f"✅ Найдено {len(results)} результатов", style="green")
     
     async def _show_schema(self, source_id: str, table_name: str):
         """Показать схему таблицы."""
