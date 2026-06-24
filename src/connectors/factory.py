@@ -13,6 +13,8 @@ class ConnectorFactory:
     @staticmethod
     def create_connector(source_type: str, source_id: str, config: Dict[str, Any]) -> BaseConnector:
         """Create a connector instance based on source type."""
+        # TODO: добавить поддержку PostgreSQL
+        # TODO: добавить поддержку MongoDB
         if source_type == 'sqlite':
             return SQLiteConnector(source_id, config)
         elif source_type == 'csv':

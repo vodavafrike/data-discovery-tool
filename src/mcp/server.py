@@ -43,6 +43,7 @@ class MCPServer:
         #self._setup_cors()
     
     def _setup_cors(self):
+         # TODO: настроить CORS для конкретных доменов, а не для всех
         self.app.add_middleware(
             CORSMiddleware,
             allow_origins=["*"],

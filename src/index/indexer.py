@@ -79,6 +79,7 @@ class MetadataStore:
     
     def search(self, query: str, source_id: Optional[str] = None) -> List[Dict[str, Any]]:
         """Выполняет поиск по индексу."""
+        # TODO: добавить кеширование частых запросов для ускорения
         query_terms = query.lower().strip().split()
         results = {}
         
