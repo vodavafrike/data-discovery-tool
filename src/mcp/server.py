@@ -6,6 +6,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Optional
 import uvicorn
+import sys
+from pathlib import Path
 
 from .tools import MCPTools
 from ..index.indexer import MetadataStore
@@ -38,10 +40,9 @@ class MCPServer:
             version="1.0.0"
         )
         self._setup_routes()
-        self._setup_cors()
+        #self._setup_cors()
     
     def _setup_cors(self):
-        """Configure CORS middleware."""
         self.app.add_middleware(
             CORSMiddleware,
             allow_origins=["*"],
@@ -106,3 +107,36 @@ class MCPServer:
     def run(self, host: str = "0.0.0.0", port: int = 8000):
         """Run the MCP server."""
         uvicorn.run(self.app, host=host, port=port)
+
+
+# Создаём экземпляр приложения
+def create_app():
+    """Создаёт приложение с загруженными данными."""
+    import asyncio
+    
+    # Добавляем корневую папку в путь
+    sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+    
+    from src.index.indexer import MetadataStore
+    from main import load_sample_data
+    
+    # Загружаем данные
+    store = MetadataStore()
+    
+    if not store.sources:
+        try:
+            asyncio.run(load_sample_data(store))
+            print("✅ Данные загружены для MCP сервера")
+        except Exception as e:
+            print(f"⚠️ Ошибка загрузки данных: {e}")
+    
+    return MCPServer(store).app
+
+
+# Создаём app для uvicorn
+app = create_app()
+
+
+# Для запуска напрямую
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8001)
