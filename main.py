@@ -21,7 +21,7 @@ async def load_sample_data(store: MetadataStore):
     from src.connectors.sqlite_connector import SQLiteConnector
     from src.connectors.csv_connector import CSVConnector
     
-    print("📊 Загрузка демонстрационных данных...")
+    print("Загрузка демонстрационных данных...")
     
     data_dir = Path('./data/sample_data')
     data_dir.mkdir(parents=True, exist_ok=True)
@@ -132,7 +132,7 @@ async def main():
     elif args.mode == 'server':
         from src.mcp.server import MCPServer
         server = MCPServer(store)
-        print(f"🚀 Запуск MCP сервера на http://{args.host}:{args.port}")
+        print(f" Запуск MCP сервера на http://{args.host}:{args.port}")
         import uvicorn
         uvicorn.run(server.app, host=args.host, port=args.port)
 

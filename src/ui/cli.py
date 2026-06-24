@@ -102,15 +102,15 @@ class CLI:
         # Показываем подсказки
         suggestions = self._get_suggestions(query)
         if suggestions:
-            self.console.print("[dim]💡 Подсказки:[/dim] " + ", ".join(suggestions[:5]))
+            self.console.print("[dim] Подсказки:[/dim] " + ", ".join(suggestions[:5]))
     
         results = self.search_engine.search(query)
     
         if not results:
-            self.console.print(f"❌ Результатов по запросу '{query}' не найдено", style="yellow")
+            self.console.print(f" Результатов по запросу '{query}' не найдено", style="yellow")
             return
     
-        table = Table(title=f"📊 Результаты поиска: '{query}'")
+        table = Table(title=f" Результаты поиска: '{query}'")
         table.add_column("Источник", style="cyan")
         table.add_column("Таблица")
         table.add_column("Релевантность", justify="right")
@@ -127,7 +127,7 @@ class CLI:
             )
     
         self.console.print(table)
-        self.console.print(f"✅ Найдено {len(results)} результатов", style="green")
+        self.console.print(f" Найдено {len(results)} результатов", style="green")
     
     async def _show_schema(self, source_id: str, table_name: str):
         """Показать схему таблицы."""
