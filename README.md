@@ -44,7 +44,6 @@ streamlit run web_app.py
 ### MCP Server (API для AI-агентов):
 python server.py
 
-
 ## Скриншоты
 
 ### Запуск проекта
