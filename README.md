@@ -41,12 +41,9 @@ sample.db (SQLite)
 python main.py --mode cli
 ### Web UI (Streamlit):
 streamlit run web_app.py
-#### Сервер будет доступен по адресу:
-http://localhost:8501
 ### MCP Server (API для AI-агентов):
 python server.py
-#### Сервер будет доступен по адресу:
-http://localhost:8005
+
 
 ## Скриншоты
 
