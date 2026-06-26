@@ -6,48 +6,50 @@
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.104-green.svg)](https://fastapi.tiangolo.com/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## О проекте
+**Data Discovery Tool** — это сервис, который позволяет быстро находить данные в разных источниках (SQLite, CSV) по ключевым словам. Сервис индексирует структуру данных и предоставляет удобный поиск через **три интерфейса**:
 
-**Data Discovery Tool** — это сервис, который позволяет быстро находить данные в разных источниках (SQLite, CSV) по ключевым словам. Сервис индексирует структуру данных и предоставляет удобный поиск через CLI, Web UI (Streamlit) или API(MCP Server)
+- **CLI** — командная строка
+- **Web UI** — веб-интерфейс на Streamlit
+- **MCP Server** — REST API для AI-агентов
 
 ## Установка и запуск
 
 ### 1. Склонируйте репозиторий:
 
 ```powershell
-'git clone https://github.com/vodavafrike/data-discovery-tool.git'
-'cd data-discovery-tool'
+git clone https://github.com/vodavafrike/data-discovery-tool.git
+cd data-discovery-tool
 
 ### 2. Cоздайте виртуальное окружение:
-'python -m venv venv'
+python -m venv venv
 
 ### 3. Активируйте его:
-'.\venv\bin\activate' или '.\venv\Scripts\activate'
+.\venv\bin\activate или .\venv\Scripts\activate
 
 ### 4. Установите зависимости:
-'python -m pip install -r requirements.txt'
+python -m pip install -r requirements.txt
 
 ### 5. Загрузите демонстрационные данные:
 Данные загружаются автоматически при первом запуске!
 
 При первом запуске в папке data/ появятся:
-'sample_data/customers.csv'
-'sample_data/orders.csv'
-'sample.db (SQLite)'
+sample_data/customers.csv
+sample_data/orders.csv
+sample.db (SQLite)
 
 ### 6. Запустите сервис:
 ### Режим CLI (командная строка):
-'python main.py --mode cli'
+python main.py --mode cli
 
 ### Web UI (Streamlit):
-'streamlit run web_app.py'
+streamlit run web_app.py
 #### Сервер будет доступен по адресу:
-'http://localhost:8501'
+http://localhost:8501
 
 ### MCP Server (API для AI-агентов):
-'python server.py'
+python server.py
 #### Сервер будет доступен по адресу:
-'http://localhost:8005'
+http://localhost:8005
 
 
 ## Скриншоты
